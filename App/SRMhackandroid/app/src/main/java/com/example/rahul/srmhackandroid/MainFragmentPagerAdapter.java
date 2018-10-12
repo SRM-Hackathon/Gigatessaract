@@ -1,8 +1,10 @@
 package com.example.rahul.srmhackandroid;
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 
 import com.example.rahul.srmhackandroid.Fragments.CameraFragment;
 import com.example.rahul.srmhackandroid.Fragments.ConnectFragment;
@@ -30,6 +32,6 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 }
