@@ -1,5 +1,5 @@
 function [x] = featureLabel(contents,C)
-len = size(C);
+len = size(C,1);
 x = zeros;
 feature = [];
 
@@ -18,7 +18,7 @@ feature = [];
        continue;
     end
        for(i=1:len)
-    if(strcmp(C(i), str)==1)
+    if strcmp(C(i), str)==1
     feature = [feature;i];  
     end
   end

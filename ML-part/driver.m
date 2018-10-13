@@ -1,48 +1,38 @@
 [A,B,C,D,E,F] = textread ('dictionary.tsv','%s %d %s %s %s %s','headerlines',1);
 [id, label] = xlsread('sentiment2.xlsx');
 idtodel = zeros;
-for i = 1:size(id,1)
-    if id(i)==0
-        idtodel(i) = 1;
-    end
-end
-idtodel = (id==0);
 
-%X(idtodel, :) = [];
-%id(idtodel, :) = [];
-for i = 1:size(id,1) 
-    if(id(i)==-1) id(i) = 0;
-    end;
-end;
+
+
+
+idtodel = (id(:,1)==0);
+%X(id(:,1)==0, :) = [];
+%id(id(:,1)==0, :) = [];
+s = size(id,1);
+X = zeros(s, size(C,1));
+idtoshrink = (id(:,1)==-1);
 label = char(label(1:3575));
 %G = cell2mat(label);
 fid = fopen('tweetdata.txt');
 str = importdata('tweetdata.txt');
 %str = textscan(fid, '%c', 'Delimiter', '\n\n');
-idsrt = [""];
-len = 3574;
-Theta = zeros;
-for i = 1: len+1
-    Theta(i)  = rand();
-end;
-X = zeros(len,8221);
-temp = repmat('h', 3574,80);
-for i  =1:len
-  temp(i, :) = str{i}(118:197);
-  X(1, :) = featureLabel(temp(i,:),C);
-
-  
-  
+temp = repmat('h', 3574,140);
+for i=1:s
+  temp(i, :) = str{i}(118:257);
+  X(i, :) = featureLabel(temp(i,:),C);
 end
 
 X(idtodel, :) = [];
 id(idtodel, :) = [];
-
+for i = 1:size(idtoshrink,1)
+    id(idtoshrink(i),1)  = 0;
+end
+index = floor(0.6*size(X,1));
 model = fitcsvm(X, id);
-[label,score] = predict(model,X(2000,:));
-disp(score);
+%maxscore = 0;
+%disp(score);
 
-
+%disp(maxscore);
 %idsrt(i) = temp(53:70);
 
 %disp(idstr(5));
