@@ -100,7 +100,7 @@ public class ResultActivity extends AppCompatActivity {
 
 //                    sendToServer(url.toString());
                     //TODO send the link to server, get result, display
-                    addToDB("Plaze wolder",Img_path);
+                    addToDB("Place holder text....... ",Img_path);
                 }
             }
         });

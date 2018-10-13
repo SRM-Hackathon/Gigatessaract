@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:padding="12dp"
+        android:paddingTop="12dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -17,12 +17,20 @@
             android:focusable="true"
             android:scaleType="centerInside"
             android:id="@+id/scanned_image"
+            android:elevation="12dp"
             android:layout_width="match_parent"
             android:layout_height="400dp" />
+
+        <View
+            android:id="@+id/view"
+            android:background="#d3d3d3"
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
 
         <TextView
             android:focusable="true"
             android:id="@+id/result_text"
+            android:elevation="12dp"
             android:layout_weight="1"
             android:textSize="18sp"
             android:textColor="@android:color/black"
