@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity{
      * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
+            "rahul:hello", "bar@example.com:world"
     };
 
     private UserLoginTask mAuthTask = null;
@@ -95,10 +95,6 @@ public class LoginActivity extends AppCompatActivity{
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
         }
 
         if (cancel) {
@@ -112,11 +108,6 @@ public class LoginActivity extends AppCompatActivity{
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
-    }
-
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {

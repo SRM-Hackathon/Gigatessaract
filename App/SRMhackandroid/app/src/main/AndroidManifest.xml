@@ -11,11 +11,6 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -26,25 +21,27 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTop"></activity>
+            android:launchMode="singleTop" />
         <activity android:name=".ResultActivity" />
         <activity android:name=".Chat.ChatActivity" />
         <activity android:name=".ResultDetailsActivity" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login">
+        </activity>
+        <provider
+            android:name=".Database.DataProvider"
+            android:authorities="com.example.rahul.srmhackandroid"
+            android:exported="false" />
+        <activity
+            android:name=".SplashActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <provider
-            android:name=".Database.DataProvider"
-            android:authorities="com.example.rahul.srmhackandroid"
-            android:exported="false" />
-
     </application>
 
 </manifest>
