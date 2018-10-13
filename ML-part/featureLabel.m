@@ -1,9 +1,6 @@
-function [x, label] = featureLabel(contents, id)
-  [A,B,C,D,E,F] = tdfread("dictionary.tsv", '%s %d %s %s %s %s');
-  
-contents = read_file('message.txt');
+function [x] = featureLabel(contents,C)
 len = size(C);
-x = zeros(len,1);
+x = zeros;
 feature = [];
 
   while ~isempty(contents)
@@ -27,4 +24,5 @@ feature = [];
   end
   for(i=1:size(feature,1))
   x(feature(i)) = 1;
+  end
 end
