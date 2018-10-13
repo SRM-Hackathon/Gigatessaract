@@ -26,25 +26,25 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"></activity>
+        <activity android:name=".ResultActivity" />
+        <activity android:name=".Chat.ChatActivity" />
+        <activity android:name=".ResultDetailsActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ResultActivity" />
-        <activity android:name=".Chat.ChatActivity" />
 
         <provider
             android:name=".Database.DataProvider"
             android:authorities="com.example.rahul.srmhackandroid"
             android:exported="false" />
 
-        <activity android:name=".ResultDetailsActivity" />
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login"></activity>
     </application>
 
 </manifest>

@@ -26,7 +26,6 @@ public class HistoryFragment extends Fragment implements LoaderManager.LoaderCal
 
 
     public HistoryFragment() {
-        // Required empty public constructor
     }
 
     private static final int FAVOURITE_LOADER = 0;
@@ -40,7 +39,6 @@ public class HistoryFragment extends Fragment implements LoaderManager.LoaderCal
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_history, container, false);
-
 
         historyList = rootView.findViewById(R.id.listView);
         empty = rootView.findViewById(R.id.listEmptyView);
@@ -76,6 +74,12 @@ public class HistoryFragment extends Fragment implements LoaderManager.LoaderCal
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         getLoaderManager().initLoader(FAVOURITE_LOADER, null, this);
         super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle("Your History");
     }
 
     @Override

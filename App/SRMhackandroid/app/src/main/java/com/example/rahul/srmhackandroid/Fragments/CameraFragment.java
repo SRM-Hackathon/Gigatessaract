@@ -33,6 +33,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -322,6 +323,7 @@ public class CameraFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
+        getActivity().setTitle("Scan your script");
         startBackgroundThread();
         int time = (int) (System.currentTimeMillis());
         Timestamp tsTemp = new Timestamp(time);

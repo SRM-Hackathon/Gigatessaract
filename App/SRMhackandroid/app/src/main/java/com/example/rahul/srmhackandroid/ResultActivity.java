@@ -12,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.rahul.srmhackandroid.Database.DyslecContract;
+import com.example.rahul.srmhackandroid.RestAPI.ApiClient;
+import com.example.rahul.srmhackandroid.RestAPI.ApiInterface;
+import com.example.rahul.srmhackandroid.RestAPI.ImageInformation;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,10 +25,16 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -52,6 +61,8 @@ public class ResultActivity extends AppCompatActivity {
                 path = "file://" + imgFile.getPath();
             }
         } else Picasso.get().load(path).into(imageView);
+
+        sendToServer(path);
 
 
 
@@ -86,11 +97,45 @@ public class ResultActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     url = task.getResult();
                     Log.i("Final URL",url.toString());
+
+//                    sendToServer(url.toString());
                     //TODO send the link to server, get result, display
                     addToDB("Plaze wolder",Img_path);
                 }
             }
         });
+    }
+
+    private void sendToServer(String s) {
+
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        ImageInformation imageInformation = new ImageInformation(s,0,"jpeg");
+
+        Call<String> exampleCall = apiService.postData(imageInformation);
+
+        exampleCall.enqueue(new Callback<String>()
+        {
+            @Override
+            public void onResponse (Call < String > call, Response< String > response){
+//                int res_code = response.body().getRes_code();
+//                if(res_code!=200){
+//                    Log.v("server_status","SUCCESS");
+//                }
+//                else{
+//                    Log.v("server_status","FAILURE");
+//                }
+
+                Log.i("Response String",response.body());
+            }
+
+            @Override
+            public void onFailure (Call < String > call, Throwable t){
+                Log.i("Failed",t.getMessage());
+            }
+        });
+
     }
 
     public void addToDB(String text, String path){
@@ -99,7 +144,13 @@ public class ResultActivity extends AppCompatActivity {
         values.put(DyslecContract.DyslecEntry.SRC,path);
 
         String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-        String time = Calendar.getInstance().getTime().toString();
+
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"));
+        Date currentLocalTime = cal.getTime();
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm a");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+5:30"));
+
+        String time = dateFormat.format(currentLocalTime);
 
         values.put(DyslecContract.DyslecEntry.DATE,date);
         values.put(DyslecContract.DyslecEntry.TIME,time);

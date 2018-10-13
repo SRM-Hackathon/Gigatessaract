@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
 import com.example.rahul.srmhackandroid.Fragments.CameraFragment;
@@ -13,7 +14,7 @@ import com.example.rahul.srmhackandroid.Fragments.HistoryFragment;
 /**
  * Provides the appropriate {@link Fragment} for a view pager.
  */
-public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
+public class MainFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     public MainFragmentPagerAdapter(FragmentManager fm) {
         super(fm);

@@ -2,6 +2,7 @@ package com.example.rahul.srmhackandroid;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.AsyncTask;
@@ -196,7 +197,8 @@ public class LoginActivity extends AppCompatActivity{
             showProgress(false);
 
             if (success) {
-                finish();
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(i);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
