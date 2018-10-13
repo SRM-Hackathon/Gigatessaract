@@ -2,8 +2,8 @@
 require_once 'spelling.php';
 
 $string = 'VS-RAHUL-LINK.jpg';
-$fbool = $_GET['flip'];
-$ext = $_GET['extension'];
+$fbool = $_POST['flip'];
+$ext = $_POST['extension'];
 if($ext=='jpeg')
 $im = imagecreatefromjpeg($string);
 else if($ext=='png')
