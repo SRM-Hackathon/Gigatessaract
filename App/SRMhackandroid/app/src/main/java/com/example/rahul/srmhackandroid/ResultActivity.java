@@ -1,20 +1,19 @@
 package com.example.rahul.srmhackandroid;
 
+import android.content.ContentValues;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.example.rahul.srmhackandroid.Database.DyslecContract;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -22,8 +21,11 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.net.URL;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -65,6 +67,8 @@ public class ResultActivity extends AppCompatActivity {
 
         UploadTask uploadTask = photoRef.putFile(Uri.parse(path));
 
+        final String Img_path = path;
+
 // Register observers to listen for when the download is done or if it fails
         Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
@@ -82,14 +86,31 @@ public class ResultActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     url = task.getResult();
                     Log.i("Final URL",url.toString());
-                } else {
-                    // Handle failures
-                    // ...
+                    //TODO send the link to server, get result, display
+                    addToDB("Plaze wolder",Img_path);
                 }
             }
         });
     }
 
+    public void addToDB(String text, String path){
+        ContentValues values = new ContentValues();
+        values.put(DyslecContract.DyslecEntry.TEXT,text);
+        values.put(DyslecContract.DyslecEntry.SRC,path);
 
+        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        String time = Calendar.getInstance().getTime().toString();
+
+        values.put(DyslecContract.DyslecEntry.DATE,date);
+        values.put(DyslecContract.DyslecEntry.TIME,time);
+        values.put(DyslecContract.DyslecEntry.UPDATE,new Date().getTime());
+
+        Uri newUri = getContentResolver().insert(DyslecContract.DyslecEntry.CONTENT_URI, values);
+        // Show a toast message depending on whether or not the insertion was successful
+        if (newUri == null) {
+            Toast.makeText(this, getString(R.string.editor_insert_failed),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
 }
 
